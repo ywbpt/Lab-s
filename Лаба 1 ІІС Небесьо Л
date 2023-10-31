@@ -1,0 +1,14 @@
+data = pd.read_csv("file.csv")
+data["Month"] = pd.to_datetime(data["Date"]).dt.month
+monthly_sales = data.groupby("Month")["Sales"].sum()
+print(monthly_sales)
+ray.init()
+@ray.remote def find_monthly(data): average =
+data.groupby("Category")["Sales"].sum() return
+average
+data = pd.read_csv("file.csv")
+data_split = np.array_split(data, 3)
+futures = [find_monthly.remote(part) for part in data_split] category_average
+= ray.get(futures)
+result = pd.concat(category_average)
+print(result)
