@@ -1,0 +1,17 @@
+import pandas as pd
+# Завантажте набір даних
+data = pd.read_csv("vgsales.csv")
+# Виберіть дані за 2015 рік і відсортуйте за продажами в Японії
+top_game_japan_2015 = data[data['Year'] == 2015].sort_values(by='JP_Sales',
+ascending=False).iloc[0]
+# Виводимо назву гри та кількість продажів у Японії
+print("Найкраще продавана гра в Японії у 2015 році:",
+top_game_japan_2015['Name'])
+print("Кількість продажів у Японії:", top_game_japan_2015['JP_Sales'])
+# Знайдіть загальну кількість проданих ігор в Японії у 2015 році
+total_sales_japan_2015 = data[data['Year'] == 2015]['JP_Sales'].sum()
+# Розрахуйте долю продажів цієї гри відносно загальних продажів в Японії
+market_share = (top_game_japan_2015['JP_Sales'] / total_sales_japan_2015) *
+100
+print("Доля продажів цієї гри відносно загальних продажів в Японії:",
+market_share, "%") 
