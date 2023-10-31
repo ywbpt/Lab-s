@@ -1,0 +1,16 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+# Завантажте набір даних
+data = pd.read_csv("vgsales.csv")
+# Виберіть дані за 2015-2023 роки і групуйте за платформами PS4 та PC
+platform_sales = data[(data['Year'] >= 2015) & (data['Platform'].isin(['PS4',
+'PC']))]
+platform_sales = platform_sales.groupby(['Year',
+'Platform'])['Global_Sales'].count().unstack()
+# Побудуйте графік
+platform_sales.plot(kind='bar', stacked=True)
+plt.title('Продажі ігор на PS4 та PC (2015-2023)')
+plt.xlabel('Рік')
+plt.ylabel('Кількість проданих ігор')
+plt.legend(title='Платформа')
+plt.show()
