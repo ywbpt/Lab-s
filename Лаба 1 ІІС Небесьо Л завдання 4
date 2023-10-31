@@ -1,0 +1,17 @@
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+# Завантажте набір даних
+data = pd.read_csv("vgsales.csv")
+# Виберіть дані за 2023 рік
+genre_sales_2023 = data[data['Year'] == 2023]
+# Групуйте дані за жанрами та обчислюйте загальні продажі в Європі
+genre_sales_2023 =
+genre_sales_2023.groupby('Genre')['EU_Sales'].sum().reset_index()
+# Побудуйте кругову діаграму з використанням Seaborn
+plt.figure(figsize=(8, 8))
+plt.title('Доля популярності жанрів ігор в Європі 2023')
+sns.set_color_codes("pastel")
+sns.barplot(x="EU_Sales", y="Genre", data=genre_sales_2023,
+palette="Blues_d")
+plt.show()
