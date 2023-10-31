@@ -1,0 +1,74 @@
+using System;
+using System.Collections.Generic;
+
+class GasCompany
+{
+    static void Main()
+    {
+        // Створення таблиці для обліку плати за газ
+        Dictionary<int, double> gasMeterReadings = new Dictionary<int, double>();
+
+        bool isRunning = true;
+        while (isRunning)
+        {
+            Console.WriteLine("Виберіть опцію:");
+            Console.WriteLine("1. Додати показання лічильника");
+            Console.WriteLine("2. Розрахувати плату за газ");
+            Console.WriteLine("3. Вийти");
+
+            int choice;
+            if (int.TryParse(Console.ReadLine(), out choice))
+            {
+                switch (choice)
+                {
+                    case 1:
+                        AddGasMeterReading(gasMeterReadings);
+                        break;
+                    case 2:
+                        CalculateGasPayment(gasMeterReadings);
+                        break;
+                    case 3:
+                        isRunning = false;
+                        break;
+                    default:
+                        Console.WriteLine("Невірний вибір. Спробуйте ще раз.");
+                        break;
+                }
+            }
+            else
+            {
+                Console.WriteLine("Невірний вибір. Введіть число.");
+            }
+        }
+    }
+
+    static void AddGasMeterReading(Dictionary<int, double> meterReadings)
+    {
+        Console.Write("Введіть номер квартири: ");
+        int apartmentNumber = int.Parse(Console.ReadLine());
+
+        Console.Write("Введіть показання лічильника: ");
+        double meterReading = double.Parse(Console.ReadLine());
+
+        meterReadings[apartmentNumber] = meterReading;
+        Console.WriteLine("Показання лічильника для квартири {0} додано.", apartmentNumber);
+    }
+
+    static void CalculateGasPayment(Dictionary<int, double> meterReadings)
+    {
+        Console.Write("Введіть номер квартири: ");
+        int apartmentNumber = int.Parse(Console.ReadLine());
+
+        if (meterReadings.ContainsKey(apartmentNumber))
+        {
+            double meterReading = meterReadings[apartmentNumber];
+            double payment = meterReading * 2.5; // Приклад розрахунку плати
+
+            Console.WriteLine("До оплати за газ квартирою {0}: {1} грн", apartmentNumber, payment);
+        }
+        else
+        {
+            Console.WriteLine("Квартира з номером {0} не знайдена.", apartmentNumber);
+        }
+    }
+}
