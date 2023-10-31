@@ -1,0 +1,58 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.WriteLine("Введіть текстовий рядок:");
+        string inputText = Console.ReadLine();
+
+        // Розділити текст на слова, використовуючи пробіли як роздільники
+        string[] words = inputText.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+        int maxVowelCount = 0;
+        string wordWithMaxVowels = "";
+
+        // Змінна для зберігання кількості слів у тексті
+        int wordCount = words.Length;
+
+        for (int i = 0; i < wordCount; i++)
+        {
+            // Видаляємо всі непотрібні символи, такі як крапки, коми, та інше, залишаючи лише літери
+            string cleanedWord = new string(words[i].Where(char.IsLetter).ToArray());
+
+            int vowelCount = 0;
+            foreach (char letter in cleanedWord)
+            {
+                if ("AEIOUYaeiouy".Contains(letter))
+                {
+                    vowelCount++;
+                }
+            }
+
+            if (vowelCount > maxVowelCount)
+            {
+                maxVowelCount = vowelCount;
+                wordWithMaxVowels = cleanedWord;
+            }
+        }
+
+        // Вивести кількість слів у тексті
+        Console.WriteLine($"Кількість слів у тексті: {wordCount}");
+
+        if (!string.IsNullOrEmpty(wordWithMaxVowels))
+        {
+            // Вивести слово з максимальною кількістю голосних літер
+            Console.WriteLine($"Слово з найбільшою кількістю голосних літер: {wordWithMaxVowels}");
+        }
+        else
+        {
+            Console.WriteLine("Текст не містить слів або голосних літер.");
+        }
+
+        // Видалити всі непотрібні пробіли у тексті та вивести очищений текст
+        string cleanedText = string.Join(" ", words);
+        Console.WriteLine("Очищений текст:");
+        Console.WriteLine(cleanedText);
+    }
+}
