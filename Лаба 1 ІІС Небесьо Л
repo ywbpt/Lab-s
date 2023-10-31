@@ -1,0 +1,7 @@
+import pandas as pd
+# Завантажте набір даних
+data = pd.read_csv('vgsales.csv')
+# Групуємо за видавництвами та сумуємо продажі в Європі
+top_publishers_eu = data.groupby('Publisher')['EU_Sales'].sum().nlargest(10)
+# Виводимо ТОП-10 видавництв
+print(top_publishers_eu)
