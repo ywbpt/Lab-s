@@ -1,0 +1,85 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Введіть розмір масиву N: ");
+        int N = int.Parse(Console.ReadLine());
+
+        double[] array = new double[N];
+
+        // Заповнюємо масив введеними значеннями
+        for (int i = 0; i < N; i++)
+        {
+            Console.Write($"Введіть значення для елемента {i + 1}: ");
+            array[i] = double.Parse(Console.ReadLine());
+        }
+
+        Console.WriteLine("Введені значення масиву:");
+
+        foreach (var item in array)
+        {
+            Console.Write(item + " ");
+        }
+
+        // Сума елементів масиву з непарними індексами
+        double sumOddIndexes = 0;
+        for (int i = 0; i < N; i += 2)
+        {
+            sumOddIndexes += array[i];
+        }
+
+        // Пошук першого і останнього від'ємного елемента
+        int firstNegativeIndex = -1;
+        int lastNegativeIndex = -1;
+        for (int i = 0; i < N; i++)
+        {
+            if (array[i] < 0)
+            {
+                if (firstNegativeIndex == -1)
+                {
+                    firstNegativeIndex = i;
+                }
+                lastNegativeIndex = i;
+            }
+        }
+
+        // Сума елементів між першим і останнім від'ємними елементами
+        double sumBetweenNegatives = 0;
+        if (firstNegativeIndex != -1 && lastNegativeIndex != -1)
+        {
+            for (int i = firstNegativeIndex + 1; i < lastNegativeIndex; i++)
+            {
+                sumBetweenNegatives += array[i];
+            }
+        }
+
+        Console.WriteLine($"\nСума елементів масиву з непарними індексами: {sumOddIndexes}");
+        Console.WriteLine($"Сума елементів між першим і останнім від'ємними елементами: {sumBetweenNegatives}");
+
+        // Переставлення перших M елементів в кінець масиву
+        Console.Write("Введіть M (M < N): ");
+        int M = int.Parse(Console.ReadLine());
+
+        if (M < N)
+        {
+            ArraySegment<double> firstMSegment = new ArraySegment<double>(array, 0, M);
+            ArraySegment<double> restSegment = new ArraySegment<double>(array, M, N - M);
+
+            double[] newArray = new double[N];
+            restSegment.CopyTo(newArray, 0);
+            firstMSegment.CopyTo(newArray, N - M);
+
+            Console.WriteLine("\nМасив після перестановки перших M елементів в кінець:");
+            foreach (var item in newArray)
+            {
+                Console.Write(item + " ");
+            }
+        }
+        else
+        {
+            Console.WriteLine("Помилка: M повинно бути менше за N.");
+        }
+    }
+}
