@@ -1,0 +1,58 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Введіть кількість рядків: ");
+        int rows = int.Parse(Console.ReadLine());
+
+        Console.Write("Введіть кількість стовпців: ");
+        int cols = int.Parse(Console.ReadLine());
+
+        int[,] matrix = new int[rows, cols];
+
+        for (int i = 0; i < rows; i++)
+        {
+            Console.WriteLine($"Введіть значення для рядка {i + 1} (через пробіл):");
+            string[] values = Console.ReadLine().Split(' ');
+
+            for (int j = 0; j < cols; j++)
+            {
+                matrix[i, j] = int.Parse(values[j]);
+            }
+        }
+
+        int productOfNonNegativeRows = 1;
+        int maxSumOfDiagonals = int.MinValue;
+
+        for (int i = 0; i < rows; i++)
+        {
+            bool hasNegative = false;
+            int diagonalSum = 0;
+
+            for (int j = 0; j < cols; j++)
+            {
+                if (matrix[i, j] < 0)
+                {
+                    hasNegative = true;
+                    break;
+                }
+                diagonalSum += matrix[i, j];
+            }
+
+            if (!hasNegative)
+            {
+                productOfNonNegativeRows *= diagonalSum;
+            }
+
+            if (diagonalSum > maxSumOfDiagonals)
+            {
+                maxSumOfDiagonals = diagonalSum;
+            }
+        }
+
+        Console.WriteLine($"Добуток елементів в рядках без від'ємних елементів: {productOfNonNegativeRows}");
+        Console.WriteLine($"Максимум серед сум елементів діагоналей, паралельних головній діагоналі: {maxSumOfDiagonals}");
+    }
+}
