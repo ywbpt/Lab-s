@@ -1,0 +1,29 @@
+using System;
+class Program
+{
+ static double CalculateExpression(double x, double z)
+ {
+ double numerator = Math.Abs(Math.Pow(x, 3) - Math.Pow(z, 3));
+ double denominator = Math.Sqrt(Math.Pow(x, 2) - 9);
+ if (denominator == 0)
+ {
+ throw new DivideByZeroException("Denominator cannot be zero.");
+ }
+ return numerator / denominator;
+ }
+ static void Main()
+ {
+ // Замініть ці значення на ті, які вам потрібні
+ double x = 5.0;
+ double z = 2.0;
+ try
+ {
+ double result = CalculateExpression(x, z);
+ Console.WriteLine("Результат: " + result);
+ }
+ catch (DivideByZeroException ex)
+ {
+ Console.WriteLine("Помилка: " + ex.Message);
+ }
+ }
+}     
